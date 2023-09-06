@@ -33,13 +33,15 @@ test("Should get data correctly", async () => {
     expect(movieData[2].Title).toEqual("The Sixth Sense");
 })
 
+// Googlade/exprimenterade fram denna lösning, inte 100% säker på att den är korrekt
 test("Should get error getting data", async () => {
     try {
         await getData("error");
-        // If we reach this point, the test should fail because an error was not thrown.
+
         expect(true).toBe(false);
     } catch (err) {
-        // Expect that an error was thrown (the test will pass if we reach this point)
+
         expect(err).toBeDefined();
+        
     }
 });

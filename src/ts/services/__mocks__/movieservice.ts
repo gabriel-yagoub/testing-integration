@@ -33,17 +33,3 @@ export const getData = async (searchText: string): Promise<IMovie[]> => {
         }
     });
 }
-
-/*
-
-export const getData = async (searchText: string): Promise<IMovie[]> => {
-    return new Promise((resolve, reject) => {
-        if (searchText !== 'error' && searchText !== ''){
-            resolve(mockMovieList.filter((testData) => testData.Title.includes(searchText)))
-        }else {
-            reject ([])
-        }
-    });
-}
-
-*/
