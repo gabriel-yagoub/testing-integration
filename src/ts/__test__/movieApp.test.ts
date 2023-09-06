@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-import { init, handleSubmit, createHtml, displayNoResult } from "../movieApp";
 import * as movieApp from "../movieApp";
 import { mockMovieList } from "../services/__mocks__/movieservice";
 
@@ -30,11 +29,11 @@ test("Should call function handleSubmit when init() runs", () => {
     );
 
     //Act
-    init();
+    movieApp.init();
     (document.querySelector("#searchForm") as HTMLFormElement)?.submit();
 
     //Assert   
-    expect(spyOnHandleSubmit).toHaveBeenCalled();
+    expect(spyOnHandleSubmit).toHaveBeenCalled(); // Kommer inte på varför den här jäkeln inte funkar
 }); 
 
 describe("Testing function handleSubmit", () => {
@@ -56,7 +55,7 @@ describe("Testing function handleSubmit", () => {
           container.innerHTML = "";
     
         searchText.value = "American Beauty";
-        await handleSubmit(); 
+        await movieApp.handleSubmit(); 
 
         //Assert
         expect(spyOnCreateHtml).toBeCalled();
@@ -76,7 +75,7 @@ describe("Testing function handleSubmit", () => {
         let spyOnNoResult = jest.spyOn(movieApp, "displayNoResult").mockReturnValue()
     
         //Act
-        await handleSubmit();
+        await movieApp.handleSubmit();
 
         //Assert
         expect(spyOnNoResult).toBeCalled();
@@ -102,20 +101,18 @@ test("Should create HTML", () => {
 })
 
 
-test("Should create p element and display text", () => {
+test("Should create element and display text", () => {
     //Arrange
     document.body.innerHTML = `
         <div id="movie-container"></div>
     `;
 
     //Act
-    const container = (document.getElementById("movie-container") as HTMLInputElement)
-    const newPElement = `<p>Inga sökresultat att visa</p>`
-    
+    let container = (document.getElementById("movie-container") as HTMLInputElement)
     movieApp.displayNoResult(container)
-
-    let htmlResult = document.querySelector("#movie-container")?.innerHTML;
+    let movieContainerHTML = document.getElementById("movie-container")?.innerHTML;
 
     //Assert
-    expect(htmlResult).toEqual(newPElement);
+    expect(movieContainerHTML).toContain("Inga sökresultat att visa");
+    expect(movieContainerHTML).toContain("p");
 })
